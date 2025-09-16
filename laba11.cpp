@@ -8,6 +8,9 @@ struct Tube {
 	bool check;
 };
 
+
+
+
 struct Ks {
 	string name;
 	int ceh;
