@@ -22,21 +22,22 @@ public:
     void inputFromConsole() {
         cout << "\n=== Добавление трубы ===" << endl;
 
-        // Исправлено: проверка, что километровая отметка — только цифры
+        // Проверка километровой отметки (только цифры)
         while (true) {
             cout << "Введите километровую отметку: ";
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            getline(cin, name);
+            string input;
+            getline(cin, input);
 
             bool isNumber = true;
-            for (char c : name) {
+            for (char c : input) {
                 if (!isdigit(c)) {
                     isNumber = false;
                     break;
                 }
             }
 
-            if (isNumber && !name.empty()) {
+            if (isNumber && !input.empty()) {
+                name = input;
                 break;
             }
             else {
@@ -47,48 +48,55 @@ public:
         // Длина
         while (true) {
             cout << "Введите длину трубы (км): ";
-            if (cin >> length && length > 0) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
+            string input;
+            getline(cin, input);
+
+            try {
+                length = stod(input);
+                if (length > 0) {
                     break;
                 }
                 else {
-                    cout << "Ошибка! После числа обнаружены лишние символы (например, буквы)." << endl;
+                    cout << "Ошибка! Длина должна быть положительным числом." << endl;
                 }
             }
-            else {
-                cout << "Ошибка! Длина должна быть положительным числом." << endl;
+            catch (...) {
+                cout << "Ошибка! Введите корректное число." << endl;
             }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
         // Диаметр
         while (true) {
             cout << "Введите диаметр трубы (мм): ";
-            if (cin >> diameter && diameter > 0) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
+            string input;
+            getline(cin, input);
+
+            try {
+                diameter = stod(input);
+                if (diameter > 0) {
                     break;
                 }
                 else {
-                    cout << "Ошибка! После числа обнаружены лишние символы (например, буквы)." << endl;
+                    cout << "Ошибка! Диаметр должен быть положительным числом." << endl;
                 }
             }
-            else {
-                cout << "Ошибка! Диаметр должен быть положительным числом." << endl;
+            catch (...) {
+                cout << "Ошибка! Введите корректное число." << endl;
             }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
         // Ремонт
         char repair_input;
         while (true) {
             cout << "Труба в ремонте? (y/n): ";
-            cin >> repair_input;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            repair_input = tolower(repair_input);
-            if (repair_input == 'y' || repair_input == 'n') {
-                break;
+            string input;
+            getline(cin, input);
+
+            if (input.length() == 1) {
+                repair_input = tolower(input[0]);
+                if (repair_input == 'y' || repair_input == 'n') {
+                    break;
+                }
             }
             cout << "Ошибка! Введите 'y' или 'n'." << endl;
         }
@@ -161,63 +169,67 @@ public:
     void inputFromConsole() {
         cout << "\n=== Добавление КС ===" << endl;
         cout << "Введите название КС: ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, name);
 
         // Общее количество цехов
         while (true) {
             cout << "Введите общее количество цехов: ";
-            if (cin >> total_workshops && total_workshops > 0) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
+            string input;
+            getline(cin, input);
+
+            try {
+                total_workshops = stoi(input);
+                if (total_workshops > 0) {
                     break;
                 }
                 else {
-                    cout << "Ошибка! После числа обнаружены лишние символы (например, буквы)." << endl;
+                    cout << "Ошибка! Количество цехов должно быть положительным числом." << endl;
                 }
             }
-            else {
-                cout << "Ошибка! Количество цехов должно быть положительным числом." << endl;
+            catch (...) {
+                cout << "Ошибка! Введите корректное число." << endl;
             }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
         // Работающие цехи
         while (true) {
             cout << "Введите количество работающих цехов: ";
-            if (cin >> working_workshops && working_workshops >= 0 &&
-                working_workshops <= total_workshops) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
+            string input;
+            getline(cin, input);
+
+            try {
+                working_workshops = stoi(input);
+                if (working_workshops >= 0 && working_workshops <= total_workshops) {
                     break;
                 }
                 else {
-                    cout << "Ошибка! После числа обнаружены лишние символы (например, буквы)." << endl;
+                    cout << "Ошибка! Количество работающих цехов должно быть от 0 до "
+                        << total_workshops << endl;
                 }
             }
-            else {
-                cout << "Ошибка! Количество работающих цехов должно быть от 0 до "
-                    << total_workshops << endl;
+            catch (...) {
+                cout << "Ошибка! Введите корректное число." << endl;
             }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
         // Класс станции
         while (true) {
             cout << "Введите класс станции (1-5): ";
-            if (cin >> station_class && station_class >= 1 && station_class <= 5) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
+            string input;
+            getline(cin, input);
+
+            try {
+                station_class = stoi(input);
+                if (station_class >= 1 && station_class <= 5) {
                     break;
                 }
                 else {
-                    cout << "Ошибка! После числа обнаружены лишние символы (например, буквы)." << endl;
+                    cout << "Ошибка! Класс станции должен быть от 1 до 5." << endl;
                 }
             }
-            else {
-                cout << "Ошибка! Класс станции должен быть от 1 до 5." << endl;
+            catch (...) {
+                cout << "Ошибка! Введите корректное число." << endl;
             }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
 
@@ -321,25 +333,21 @@ private:
             cout << "0. Выход" << endl;
             cout << "Выберите действие: ";
 
-            if (cin >> choice) {
+            string input;
+            getline(cin, input);
+
+            try {
+                choice = stoi(input);
                 if (choice >= 0 && choice <= 8) {
-                    if (cin.peek() == '\n' || cin.peek() == EOF) {
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                        return choice;
-                    }
-                    else {
-                        cout << "Ошибка! После числа обнаружены лишние символы." << endl;
-                    }
+                    return choice;
                 }
                 else {
                     cout << "Ошибка! Введите число от 0 до 8." << endl;
                 }
             }
-            else {
+            catch (...) {
                 cout << "Ошибка! Введите корректное число." << endl;
-                cin.clear();
             }
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
 
@@ -356,27 +364,23 @@ private:
             cout << "2. Вернуться в меню" << endl;
             cout << "Выберите действие: ";
 
-            if (cin >> choice) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    switch (choice) {
-                    case 1:
-                        pipe.toggleRepair();
-                        return;
-                    case 2:
-                        return;
-                    default:
-                        cout << "Ошибка! Неверный выбор." << endl;
-                    }
-                }
-                else {
-                    cout << "Ошибка! После числа обнаружены лишние символы." << endl;
+            string input;
+            getline(cin, input);
+
+            try {
+                choice = stoi(input);
+                switch (choice) {
+                case 1:
+                    pipe.toggleRepair();
+                    return;
+                case 2:
+                    return;
+                default:
+                    cout << "Ошибка! Неверный выбор." << endl;
                 }
             }
-            else {
+            catch (...) {
                 cout << "Ошибка! Введите число." << endl;
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         }
     }
@@ -395,30 +399,26 @@ private:
             cout << "3. Вернуться в меню" << endl;
             cout << "Выберите действие: ";
 
-            if (cin >> choice) {
-                if (cin.peek() == '\n' || cin.peek() == EOF) {
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    switch (choice) {
-                    case 1:
-                        station.startWorkshop();
-                        return;
-                    case 2:
-                        station.stopWorkshop();
-                        return;
-                    case 3:
-                        return;
-                    default:
-                        cout << "Ошибка! Неверный выбор." << endl;
-                    }
-                }
-                else {
-                    cout << "Ошибка! После числа обнаружены лишние символы." << endl;
+            string input;
+            getline(cin, input);
+
+            try {
+                choice = stoi(input);
+                switch (choice) {
+                case 1:
+                    station.startWorkshop();
+                    return;
+                case 2:
+                    station.stopWorkshop();
+                    return;
+                case 3:
+                    return;
+                default:
+                    cout << "Ошибка! Неверный выбор." << endl;
                 }
             }
-            else {
+            catch (...) {
                 cout << "Ошибка! Введите число." << endl;
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         }
     }
@@ -530,7 +530,6 @@ public:
                     cout << "Нет созданных объектов." << endl;
                 }
                 break;
-
             case 4:
                 editPipeMenu();
                 break;
