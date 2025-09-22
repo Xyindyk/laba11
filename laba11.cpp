@@ -530,6 +530,7 @@ public:
                     cout << "Нет созданных объектов." << endl;
                 }
                 break;
+
             case 4:
                 editPipeMenu();
                 break;
